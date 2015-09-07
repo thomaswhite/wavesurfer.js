@@ -106,3 +106,21 @@ document.addEventListener('DOMContentLoaded', function () {
         dropTarget.addEventListener(event, handlers[event]);
     });
 });
+
+
+function twGet(){
+    wavesurfer.getArrayBuffer(url, function(arraybuffer) {
+        this.decodeArrayBuffer(arraybuffer, function (buffer) {
+            this.backend.buffer = buffer;
+            this.backend.load(buffer);
+
+            var nominalWidth = Math.round(
+                this.getDuration() * this.params.minPxPerSec * this.params.pixelRatio
+            );
+
+            var peaks = this.backend.getPeaks(width);
+            this.fireEvent('redraw', peaks, width);
+            this.fireEvent('ready');
+        })
+    });
+}

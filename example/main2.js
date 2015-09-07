@@ -25,8 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var Peaks;
 
-
-    twGetPeaks('example/media/demo.wav', function(err, peaks){
+    twGetPeaks(wavesurfer, 'example/media/demo.wav', 1024, function(err, peaks){
         Peaks = peaks;
     });
 
@@ -116,16 +115,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-
-function twGetPeaks(url, callback){
-    wavesurfer.getArrayBuffer(url, function(arraybuffer) {
-        this.decodeArrayBuffer(arraybuffer, function (buffer) {
-            this.backend.buffer = buffer;
-            this.backend.load(buffer);
-
-            var peaks = this.backend.getPeaks.bind(this.backend)(1024);
-            callback(null, peaks);
-        }.bind(wavesurfer))
-    }.bind(wavesurfer))
-}
